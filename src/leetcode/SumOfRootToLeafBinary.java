@@ -1,6 +1,6 @@
-package Coding.LeetCode;
+package Programming.leetcode;
 
-import Coding.LeetCode.util.TreeNode;
+import Programming.leetcode.util.TreeNode;
 
 public class SumOfRootToLeafBinary {
 
