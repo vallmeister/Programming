@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/217_contains_duplicates.rs"
+path = "leetcode/088_merge_sorted_array.rs"
