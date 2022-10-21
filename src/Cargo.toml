@@ -1,0 +1,9 @@
+[package]
+name = "programming"
+version = "1.0.0"
+authors = ["Christian D. Valenti <christian.valenti97@gmail.com"]
+edition = "2021"
+
+[[bin]]
+name = "main"
+path = "leetcode/217_contains_duplicates.rs"
