@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/088_merge_sorted_array.rs"
+path = "leetcode/083_remove_duplicates_from_sorted_list.rs"
