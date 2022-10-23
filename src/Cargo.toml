@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/083_remove_duplicates_from_sorted_list.rs"
+path = "leetcode/645_set_mismatch.rs"
