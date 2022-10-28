@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/0088_merge_sorted_array.rs"
+path = "leetcode/0049_group_anagrams.rs"
