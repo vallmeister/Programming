@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/0108_sorted_array_to_binary_search_tree.rs"
+path = "leetcode/0766_toeplitz_matrix.rs"
