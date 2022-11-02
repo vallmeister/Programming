@@ -21,9 +21,7 @@ impl TreeNode {
   }
 }
 
-fn main() {
-
-}
+fn main() {}
 
 pub fn is_balanced(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     is_balanced_ref(&root)

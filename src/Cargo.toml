@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/0110_balanced_binary_tree.rs"
+path = "leetcode/0111_minimum_depth_binary_tree.rs"
