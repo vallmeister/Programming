@@ -6,4 +6,4 @@ edition = "2021"
 
 [[bin]]
 name = "main"
-path = "leetcode/0345_reverse_vowels_of_string.rs"
+path = "leetcode/0901_online_stock_span.rs.rs"
