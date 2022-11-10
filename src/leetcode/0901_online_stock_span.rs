@@ -32,9 +32,3 @@ impl StockSpanner {
         ans
     }
 }
-
-/**
- * Your StockSpanner object will be instantiated and called as such:
- * let obj = StockSpanner::new();
- * let ret_1: i32 = obj.next(price);
- */
