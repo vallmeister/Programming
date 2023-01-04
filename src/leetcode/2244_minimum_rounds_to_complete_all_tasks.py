@@ -11,7 +11,7 @@ def minimumRounds(tasks: list[int]) -> int:
             rounds += i // 3
         else:
             rounds += i // 3 + 1
-            
+
     return rounds
 
 
