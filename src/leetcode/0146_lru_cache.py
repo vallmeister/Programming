@@ -5,6 +5,7 @@ class ListNode:
         self.prev = previous_node
         self.post = next_node
 
+
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
