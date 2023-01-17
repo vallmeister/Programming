@@ -8,7 +8,7 @@ def insert(intervals: list[list[int]], newInterval: list[int]) -> list[list[int]
         else:
             intervals.append(newInterval)
         return intervals
-    
+
     for (idx, interval) in enumerate(intervals):
         if interval[0] > newInterval[0]:
             intervals.insert(idx, newInterval)
