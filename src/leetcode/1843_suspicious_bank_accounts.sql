@@ -1,4 +1,4 @@
-SELECT DISTINCT account_id
+SELECT DISTINCT account_id, DATE_ADD(STR_TO_DATE(mon, "%Y-%m-%d"), INTERVAL 1 month)
 FROM
     (SELECT t1.*, RANK() OVER (PARTITION BY a.account_id ORDER BY t1.mon) rk
     FROM
@@ -8,6 +8,6 @@ FROM
         GROUP BY DATE_FORMAT(day, "%Y-%m"), account_id ) t1
     JOIN Accounts a ON a.account_id = t1.account_id
     WHERE max_income < total) t2
-GROUP BY account_id, mon - INTERVAL rk month
+GROUP BY account_id, STR_TO_DATE(mon, "%Y-%m") - INTERVAL rk month
 HAVING COUNT(*) >= 2
 ORDER BY transaction_id
