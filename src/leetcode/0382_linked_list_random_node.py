@@ -18,7 +18,7 @@ class Solution:
         n = 0
         tmp = self.hd
         memo = {n: tmp}
-        while tmp.next is not None:
+        while tmp.next:
             n += 1
             tmp = tmp.next
             memo[n] = tmp
