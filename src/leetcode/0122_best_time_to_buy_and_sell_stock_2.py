@@ -1,12 +1,12 @@
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
         profit = 0
-        last = prices[0]
+        prev = prices[0]
         for p in prices[1:]:
-            diff = p - last
+            diff = p - prev
             if diff > 0:
                 profit += diff
-            last = p
+            prev = p
         return profit
 
 
