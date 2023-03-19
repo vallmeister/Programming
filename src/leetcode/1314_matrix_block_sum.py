@@ -1,9 +1,34 @@
 class Solution:
     def matrixBlockSum(self, mat: list[list[int]], k: int) -> list[list[int]]:
-        return self.matrix_block_sum_brute_force(mat, k)
+        m = len(mat)
+        n = len(mat[0])
+        block_sums = [[0] * n for _ in range(m)]
+        block_sums[0][0] = mat[0][0]
 
-    # O(m * n * k ^ 2), S(1)
-    def matrix_block_sum_brute_force(self, mat: list[list[int]], k: int) -> list[list[int]]:
+        # Block sums are the sums over all numbers from (0,0) to (i,j)
+        for i in range(m):
+            if i != 0:
+                block_sums[i][0] = block_sums[i - 1][0] + mat[i][0]
+            row_sum = mat[i][0]
+            for j in range(1, n):
+                row_sum += mat[i][j]
+                block_sums[i][j] = block_sums[i - 1][j] + row_sum
+
+        answer = [[0] * n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                answer[i][j] = block_sums[min(i + k, m - 1)][min(j + k, n - 1)]
+                c = j - k - 1 >= 0
+                b = i - k - 1 >= 0
+                if c:
+                    answer[i][j] -= block_sums[min(i + k, m - 1)][j - k - 1]
+                if b:
+                    answer[i][j] -= block_sums[i - k - 1][min(j + k, n - 1)]
+                if b and c:
+                    answer[i][j] += block_sums[i - k - 1][j - k - 1]
+        return answer
+
+    def matrix_block_sum_brute_force(self, mat: list[list[int]], k: int) -> list[list[int]]:  # O(m * n * k ^ 2), S(1)
         m = len(mat)
         n = len(mat[0])
         answer = [[0] * n for _ in range(m)]
