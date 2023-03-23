@@ -13,8 +13,7 @@ class Solution:
                 generate(curr_parenthesis + '(', left_open - 1, left_closed)
                 generate(curr_parenthesis + ')', left_open, left_closed - 1)
 
-        start = '('
-        generate(start, n - 1, n)
+        generate('', n, n)
         return parenthesis
 
 
