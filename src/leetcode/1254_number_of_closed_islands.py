@@ -5,27 +5,21 @@ class Solution:
         closed_islands = 0
 
         def dfs(row, col):
+            is_closed = True
             grid[row][col] = 1
             if row == 0 or col == 0 or row == m - 1 or col == n - 1:
-                if row > 0 and grid[row - 1][col] == 0:
-                    dfs(row - 1, col)
-                if col > 0 and grid[row][col - 1] == 0:
-                    dfs(row, col - 1)
-                if row < m - 1 and grid[row + 1][col] == 0:
-                    dfs(row + 1, col)
-                if col < n - 1 and grid[row][col + 1] == 0:
-                    dfs(row, col + 1)
-                return False
-            is_island = True
-            if grid[row - 1][col] == 0:
-                is_island = is_island and dfs(row - 1, col)
-            if grid[row][col - 1] == 0:
-                is_island = is_island and dfs(row, col - 1)
-            if grid[row + 1][col] == 0:
-                is_island = is_island and dfs(row + 1, col)
-            if grid[row][col + 1] == 0:
-                is_island = is_island and dfs(row, col + 1)
-            return is_island
+                is_closed = False
+            # be careful with lazy evaluation here; either use is_closed & dfs or dfs and is_closed, otherwise it
+            # will skip the dfs
+            if row > 0 and grid[row - 1][col] == 0:
+                is_closed = dfs(row - 1, col) and is_closed
+            if col > 0 and grid[row][col - 1] == 0:
+                is_closed = dfs(row, col - 1) and is_closed
+            if row < m - 1 and grid[row + 1][col] == 0:
+                is_closed = dfs(row + 1, col) and is_closed
+            if col < n - 1 and grid[row][col + 1] == 0:
+                is_closed = dfs(row, col + 1) and is_closed
+            return is_closed
 
         for i in range(m):
             for j in range(n):
