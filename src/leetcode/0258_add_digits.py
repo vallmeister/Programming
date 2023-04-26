@@ -7,3 +7,8 @@ class Solution:
                 num //= 10
             num = tmp
         return num
+
+
+s = Solution()
+print(s.addDigits(38))
+print(s.addDigits(0))
