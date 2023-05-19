@@ -1,7 +1,37 @@
 class Solution:
     def candyCrush(self, board: list[list[int]]) -> list[list[int]]:
+        m = len(board)
+        n = len(board[0])
+
         def find_and_crush():
-            pass
+            candidates = set()
+            for i in range(m):
+                start = end = 0
+                while end < n:
+                    cache = set()
+                    while end < n and board[i][end] != 0 and board[i][start] == board[i][end]:
+                        cache.add((i, end))
+                        end += 1
+                    if len(cache) >= 3:
+                        candidates = candidates.union(cache)
+                    if start == end:
+                        end += 1
+                    start = end
+            for i in range(n):
+                start = end = 0
+                while end < m:
+                    cache = set()
+                    while end < m and board[end][i] != 0 and board[start][i] == board[end][i]:
+                        cache.add((end, i))
+                        end += 1
+                    if len(cache) >= 3:
+                        candidates = candidates.union(cache)
+                    if start == end:
+                        end += 1
+                    start = end
+            for i, j in candidates:
+                board[i][j] = 0
+            return len(candidates)
 
         def drop_and_fill():
             pass
