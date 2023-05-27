@@ -4,6 +4,7 @@ from typing import Optional, List
 
 
 class TreeNode:
+    # TODO: Learn Quickselect and try again
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
@@ -12,23 +13,19 @@ class TreeNode:
 
 class Solution:
     def closestKValues(self, root: Optional[TreeNode], target: float, k: int) -> List[int]:
-        closest_heap = []
+        heap = []
 
-        def dfs(node):
+        def distance(value):
+            return abs(value - target)
+
+        def inorder_traversal(node):
             if node is None:
                 return
-            distance = -abs(node.val - target)
-            heappush(closest_heap, (distance, node.val))
-            while len(closest_heap) > k:
-                heappop(closest_heap)
-            if target <= node.val:
-                dfs(node.left)
-                if len(closest_heap) < k:
-                    dfs(node.right)
-            else:
-                dfs(node.right)
-                if len(closest_heap) < k:
-                    dfs(node.left)
+            inorder_traversal(node.left)
+            heappush(heap, (-distance(node.val), node.val))
+            inorder_traversal(node.right)
+            while len(heap) > k:
+                heappop(heap)
 
-        dfs(root)
-        return [i[1] for i in closest_heap]
+        inorder_traversal(root)
+        return [i[1] for i in heap]
