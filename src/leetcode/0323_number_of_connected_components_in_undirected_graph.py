@@ -2,9 +2,28 @@ from typing import List
 
 
 class Solution:
-    # TODO: Union-find
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        pass
+        parents = list(range(n))
+
+        def union(a, b):
+            parent_a = find(a)
+            parent_b = find(b)
+            if parent_a == parent_b:
+                return
+            parents[parent_a] = parent_b
+
+        def find(node):
+            if node != parents[node]:
+                parents[node] = find(parents[node])
+            return parents[node]
+
+        for u, v in edges:
+            union(u, v)
+
+        for i in range(n):
+            find(i)
+
+        return len(set(parents))
 
 
 s = Solution()
