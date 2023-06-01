@@ -7,28 +7,23 @@ class Solution:
         m = len(maze)
         n = len(maze[0])
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        visited = set()
+        visited = [[False] * n for _ in range(m)]
         q = deque()
-        for dr, dc in directions:
-            if 0 <= start[0] + dr < m and 0 <= start[1] + dc < n and maze[start[0] + dr][start[1] + dc] == 0:
-                q.append((start[0], start[1], dr, dc))
+        q.append(start)
         while q:
-            row, col, dr, dc = q.popleft()
-            if (row, col) in visited and [row, col] != start:
+            row, col = q.popleft()
+            if visited[row][col]:
                 continue
-            elif row < 0 or row >= m or col < 0 or col >= n or maze[row][col] == 1:
-                continue
-            visited.add((row, col))  # Cancels starting from start and going in all directions from there
+            visited[row][col] = True
             if [row, col] == destination:
                 return True
-            while 0 <= row + dr < m and 0 <= col + dc < n and maze[row + dr][col + dc] == 0:
-                row += dr
-                col += dc
-            for ddr, ddc in directions:
-                if 0 <= row + ddr < m and 0 <= col + ddc < n and maze[row + ddr][col + ddc] == 0 and (
-                row + ddr, col + ddc) not in visited:
-                    q.append((row, col, ddr, ddc))
-
+            for dr, dc in directions:
+                r = row
+                c = col
+                while 0 <= r + dr < m and 0 <= c + dc < n and maze[r + dr][c + dc] == 0:
+                    r += dr
+                    c += dc
+                q.append((r, c))
         return False
 
 
