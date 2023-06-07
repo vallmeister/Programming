@@ -4,16 +4,14 @@ from typing import List
 class Solution:
     def findStrobogrammatic(self, n: int) -> List[str]:
 
-        def find_strobogrammatic(n, rec):
+        def find_strobogrammatic(n):
             if n == 1:
                 return ['0', '1', '8']
             elif n == 2:
-                res = ['11', '69', '88', '96']
-                if rec:
-                    res.append('00')
+                res = ['11', '69', '88', '96', '00']
                 return res
             else:
-                nums = find_strobogrammatic(n - 2, rec)
+                nums = find_strobogrammatic(n - 2)
                 res = []
                 for i in range(len(nums)):
                     num = nums[i]
@@ -21,9 +19,11 @@ class Solution:
                     res.append('6' + num + '9')
                     res.append('8' + num + '8')
                     res.append('9' + num + '6')
+                    res.append('0' + num + '0')
                 return res
 
-        return find_strobogrammatic(n, n > 2)
+        ans = find_strobogrammatic(n)
+        return list(filter(lambda x: not (x.startswith('0') and len(x) > 1), ans))
 
 
 s = Solution()
