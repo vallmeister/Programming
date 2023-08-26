@@ -12,7 +12,7 @@ class Solution:
             dp[0][i] = True
         for i in range(n + 1):
             dp[i][0] = True
-        
+
 
 
 s = Solution()

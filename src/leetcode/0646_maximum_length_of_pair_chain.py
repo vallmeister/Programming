@@ -1,6 +1,9 @@
+import math
+
+
 class Solution:
     def findLongestChain(self, pairs: list[list[int]]) -> int:
-        return self.find_longest_chain_dp(pairs)
+        return self.find_longest_chain_greedy(pairs)
 
     def find_longest_chain_dp(self, pairs):
         pairs.sort(key=lambda x: x[0])
@@ -11,6 +14,16 @@ class Solution:
                 if pairs[i][0] > pairs[j][1]:
                     dp[i] = max(dp[j] + 1, dp[i])
         return dp[n - 1]
+
+    def find_longest_chain_greedy(self, pairs):
+        chain = 0
+        pairs.sort(key=lambda x: x[1])
+        last = -math.inf
+        for pair in pairs:
+            if pair[0] > last:
+                chain += 1
+                last = pair[1]
+        return chain
 
 
 s = Solution()
