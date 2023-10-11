@@ -1,40 +1,22 @@
-import math
-from bisect import bisect_left
-from collections import defaultdict
-from queue import PriorityQueue
+from heapq import heappush, heappop
 from typing import List
 
 
 class Solution:
     def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
-        n = len(people)
-        answer = [-1] * n
         flowers.sort()
-        full_bloom_at = defaultdict(PriorityQueue)
-        # simple and stupid first
-        for start, end in flowers:
-            for key in {start for start, _ in flowers}:
-                if start <= key <= end:
-                    full_bloom_at[key].put(end)
-        for idx, t in enumerate(people):
-            if t in full_bloom_at:
-                answer[idx] = len(full_bloom_at[t].queue)
-            else:
-                i = -1
-                for key in full_bloom_at.keys():
-                    if i < key < t:
-                        i = key
-                if i == -1:
-                    answer[idx] = 0
-                else:
-                    l1 = sorted(full_bloom_at[i].queue)
-                    k = bisect_left(l1, t)
-                    tmp_q = PriorityQueue()
-                    for num in l1[k:]:
-                        tmp_q.put(num)
-                    full_bloom_at[t] = tmp_q
-                    answer[idx] = len(tmp_q.queue)
-        return answer
+        full_bloom_at = {}
+        heap = []
+        i = 0
+        for person in sorted(people):
+            while i < len(flowers) and flowers[i][0] <= person:
+                heappush(heap, flowers[i][1])
+                i += 1
+            while heap and heap[0] < person:
+                heappop(heap)
+            full_bloom_at[person] = len(heap)
+        return [full_bloom_at[t] for t in people]
+
 
 
 s = Solution()
