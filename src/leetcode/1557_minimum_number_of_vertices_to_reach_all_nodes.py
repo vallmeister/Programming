@@ -8,6 +8,12 @@ class Solution:
     def find_smallest_set_of_vertices_functional(self, n, edges):
         return list(set(range(n)) - set(map(lambda x: x[1], edges)))
 
+    def find_smallest_set_of_vertices_easies(self, n, edges):
+        ans = set(range(n))
+        for _, target in edges:
+            ans.discard(target)
+        return list(ans)
+
 
 s = Solution()
 print(s.findSmallestSetOfVertices(6, [[0, 1], [0, 2], [2, 5], [3, 4], [4, 2]]))
