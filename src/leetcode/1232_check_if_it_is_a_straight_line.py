@@ -4,13 +4,13 @@ from typing import List
 class Solution:
     def checkStraightLine(self, coordinates: List[List[int]]) -> bool:
         coordinates.sort()
-        last_x, last_y = coordinates[0]
-        curr_x, curr_y = coordinates[1]
-        dx, dy = curr_x - last_x, curr_y - last_y
-        for i in range(2, len(coordinates)):
-            last_x, last_y = curr_x, curr_y
-            curr_x, curr_y = coordinates[i]
-            if (curr_x - last_x) % dx != 0 or (curr_y - last_y) % dy != 0:
+        x0, y0 = coordinates[0]
+        x1, y1 = coordinates[1]
+        delta_x = x1 - x0
+        delta_y = y1 - y0
+        x0, y0 = x1, y1
+        for x1, y1 in coordinates[2:]:
+            if (x1 - x0) * delta_y != (y1 - y0) * delta_x:
                 return False
         return True
 
