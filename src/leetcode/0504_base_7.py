@@ -2,15 +2,15 @@ class Solution:
     def convertToBase7(self, num: int) -> str:
         if num == 0:
             return '0'
-        sign = ''
-        if num < 0:
-            sign = '-'
-            num = -num
-        base7 = ''
+        sign = num < 0
+        num = abs(num)
+        ans = []
         while num > 0:
-            base7 += str(num % 7)
+            ans.append(str(num % 7))
             num //= 7
-        return sign + base7[::-1]
+        if sign:
+            ans.append('-')
+        return ''.join(ans[::-1])
 
 
 s = Solution()
