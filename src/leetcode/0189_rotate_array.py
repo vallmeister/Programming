@@ -4,21 +4,16 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         n = len(nums)
-        k %= len(nums)
-        start = 0
-        count = 0
+        k %= n
+        start = count = 0
         while count < n:
-            current = start
-            prev = nums[start]
+            curr_idx = start
+            prev_element = nums[curr_idx]
             while True:
-                next_idx = (current + k) % n
-                tmp = prev
-                prev = nums[next_idx]
-                nums[next_idx] = tmp
-                current = next_idx
+                curr_idx = (curr_idx + k) % n
+                nums[curr_idx], prev_element = prev_element, nums[curr_idx]
                 count += 1
-
-                if start == current:
+                if start == curr_idx:
                     break
             start += 1
 
