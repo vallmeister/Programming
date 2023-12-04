@@ -4,7 +4,7 @@ from typing import List
 
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
-        ans = set()
+        ans = []
         size = len(words[0])
         m = len(s)
         n = len(words)
@@ -25,16 +25,16 @@ class Solution:
                         count -= 1
                         left += size
                     if count == n:
-                        ans.add(left)
+                        ans.append(left)
                     right += size
                 else:
                     left = right + 1
                     count = 0
                     curr_window = defaultdict(int)
 
-        for i in range(m):
+        for i in range(size):
             sliding_window(i)
-        return list(ans)
+        return ans
 
 
 sol = Solution()
