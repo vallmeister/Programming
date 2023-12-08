@@ -12,26 +12,34 @@ class TreeNode:
 
 class Solution:
     def maximumAverageSubtree(self, root: Optional[TreeNode]) -> float:
-        max_avg = -math.inf
+        ans = -math.inf
 
-        def dfs(node):
-            nonlocal max_avg
-            if node is None:
-                return 0.0, 0.0
-            left_sum, left_size = dfs(node.left)
-            right_sum, right_size = dfs(node.right)
-            total_sum = left_sum + right_sum + node.val
-            total_size = left_size + right_size + 1
-            max_avg = max(max_avg, total_sum / total_size)
-            return total_sum, total_size
+        def recursive(node):
+            if not node:
+                return 0, 0
+            num_nodes = 1
+            val = node.val
+            num_nodes_sub, val_sub = recursive(node.left)
+            num_nodes += num_nodes_sub
+            val += val_sub
+            num_nodes_sub, val_sub = recursive(node.right)
+            num_nodes += num_nodes_sub
+            val += val_sub
+            nonlocal ans
+            ans = max(ans, val / num_nodes)
+            return num_nodes, val
 
-        dfs(root)
-        return max_avg
+        recursive(root)
+        return ans
 
 
 s = Solution()
 two = TreeNode(2)
 one = TreeNode(1)
 three = TreeNode(3, two, one)
-root = TreeNode(0, three)
-print(s.maximumAverageSubtree(root))
+zero = TreeNode(0, three)
+print(s.maximumAverageSubtree(zero))
+
+six = TreeNode(6)
+five = TreeNode(5, six, one)
+print(s.maximumAverageSubtree(five))
