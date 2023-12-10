@@ -1,19 +1,15 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
-        dirs = path.split('/')
-        res = []
-        for d in dirs:
-            if not res and d == '..':
-                continue
-            elif d == '.':
-                continue
-            elif d == '..':
-                res.pop()
-            elif d == '':
+        path = path.split('/')
+        stack = []
+        for element in path:
+            if element == '..' and stack:
+                stack.pop()
+            elif element in {'', '.', '/', '..'}:
                 continue
             else:
-                res.append(d)
-        return '/' + '/'.join(res)
+                stack.append(element)
+        return '/' + '/'.join(stack)
 
 
 s = Solution()
