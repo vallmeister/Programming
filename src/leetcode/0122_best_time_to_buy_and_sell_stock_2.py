@@ -1,12 +1,19 @@
 class Solution:
+    # TODO: Revise
     def maxProfit(self, prices: list[int]) -> int:
-        profit = 0
         prev = prices[0]
-        for p in prices[1:]:
-            diff = p - prev
-            if diff > 0:
-                profit += diff
-            prev = p
+        last_price = prev
+        profit = 0
+        curr_profit = 0
+        for price in prices[1:]:
+            if price < last_price:
+                prev = price
+                profit += curr_profit
+                curr_profit = 0
+            else:
+                curr_profit = price - prev
+            last_price = price
+        profit += curr_profit
         return profit
 
 
