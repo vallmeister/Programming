@@ -3,25 +3,23 @@ from typing import List
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        result = []
-        candidates.sort()
+        ans = []
+        n = len(candidates)
 
-        def generate_combination(curr_combination, curr_sum, curr_candidates):
-            for i in range(len(curr_candidates)):
-                tmp_sum = curr_sum + curr_candidates[i]
-                if tmp_sum == target:
-                    curr_combination.append(curr_candidates[i])
-                    result.append(list(curr_combination))
-                    curr_combination.pop()
-                elif tmp_sum > target:
-                    break
-                elif tmp_sum < target:
-                    curr_combination.append(curr_candidates[i])
-                    generate_combination(curr_combination, tmp_sum, curr_candidates[i:])
-                    curr_combination.pop()
+        def backtrack(curr_sum, curr_numbers, start):
+            if curr_sum == target:
+                ans.append(list(curr_numbers))
+                return
+            elif curr_sum > target:
+                return
+            for i in range(start, n):
+                num = candidates[i]
+                curr_numbers.append(num)
+                backtrack(curr_sum + num, curr_numbers, i)
+                curr_numbers.pop()
 
-        generate_combination([], 0, candidates)
-        return result
+        backtrack(0, [], 0)
+        return ans
 
 
 s = Solution()

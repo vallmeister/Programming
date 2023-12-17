@@ -1,24 +1,25 @@
 from typing import List
-from copy import deepcopy
 
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        result = []
+        ans = []
+        n = len(nums)
 
-        def generate(permutation, numbers):
-            if not numbers:
-                result.append(deepcopy(permutation))
-            else:
-                for i in range(len(numbers)):
-                    n = numbers.pop(i)
-                    permutation.append(n)
-                    generate(permutation, numbers)
-                    permutation.pop()
-                    numbers.insert(i, n)
+        def backtrack(curr_permutation, visited):
+            if len(curr_permutation) == n:
+                ans.append(list(curr_permutation))
+            for num in nums:
+                if num in visited:
+                    continue
+                curr_permutation.append(num)
+                visited.add(num)
+                backtrack(curr_permutation, visited)
+                curr_permutation.pop()
+                visited.discard(num)
 
-        generate([], nums)
-        return result
+        backtrack([], set())
+        return ans
 
 
 s = Solution()
