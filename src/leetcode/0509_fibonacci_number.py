@@ -20,17 +20,18 @@ def fib_memo_help(n: int, fib: dict) -> int:
 
 
 def fib_loop(n: int) -> int:
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
     p = 0
+    if n == 0:
+        return p
     q = 1
+    if n == 1:
+        return q
     for i in range(2, n + 1):
-        tmp = q
-        q += p
-        p = tmp
+        q, p = p + q, q
     return q
 
 
+print(fib_loop(6))
 print(fib_loop(5))
+print(fib_loop(4))
+print(fib_loop(3))
