@@ -26,7 +26,8 @@ class Solution:
             if top_left.val and top_right.val and bottom_left.val and bottom_right.val:
                 return Node(True, True, None, None, None, None)
             # TODO: Rethink how to prune tree
-            elif not top_left.val and not top_right.val and not bottom_left.val and not bottom_right.val:
+            elif (top_left.isLeaf and top_right.isLeaf and bottom_left.isLeaf and bottom_right.isLeaf) and (
+                    not top_left.val and not top_right.val and not bottom_left.val and not bottom_right.val):
                 return Node(False, True, None, None, None, None)
             else:
                 return Node(False, False, top_left, top_right, bottom_left, bottom_right)
