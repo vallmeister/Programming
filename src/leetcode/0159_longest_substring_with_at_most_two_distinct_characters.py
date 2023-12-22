@@ -1,22 +1,21 @@
 class Solution:
     def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:
-        chars = {}
-        start = end = 0
-        longest_substring = 0
-        while end < len(s):
-            if s[end] in chars:
-                chars[s[end]] += 1
-            else:
-                chars[s[end]] = 1
-            while len(chars.keys()) > 2:
-                chars[s[start]] -= 1
-                if chars[s[start]] == 0:
-                    del chars[s[start]]
-                start += 1
-            longest_substring = max(longest_substring, end - start + 1)
-            end += 1
-
-        return longest_substring
+        ans = 0
+        left = 0
+        window = {}
+        for right in range(len(s)):
+            letter = s[right]
+            if letter not in window:
+                window[letter] = 0
+            window[letter] += 1
+            while len(window.keys()) > 2:
+                letter = s[left]
+                window[letter] -= 1
+                left += 1
+                if window[letter] == 0:
+                    del window[letter]
+            ans = max(ans, right - left + 1)
+        return ans
 
 
 sol = Solution()
