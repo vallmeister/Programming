@@ -1,24 +1,25 @@
-import math
-
-
 class Solution:
     def findMin(self, nums: list[int]) -> int:
-        min_so_far = math.inf
+        ans = 5000
 
         def binary_search(start, end):
-            nonlocal min_so_far
-            mid = (start + end) // 2
             if start > end:
                 return
-            elif nums[start] <= nums[mid]:
-                min_so_far = min(min_so_far, nums[start])
+            mid = (start + end) // 2
+            nonlocal ans
+            if nums[start] <= nums[mid] <= nums[end]:
+                ans = min(ans, nums[start])
+                binary_search(0, start - 1)
+            elif nums[start] <= nums[mid] >= nums[end]:
+                ans = min(ans, nums[end], nums[start])
                 binary_search(mid + 1, end)
-            else:
-                min_so_far = min(min_so_far, nums[mid])
-                binary_search(start, mid - 1)
+            elif nums[start] >= nums[mid] <= nums[end]:
+                ans = min(ans, nums[mid])
+                binary_search(start + 1, mid - 1)
+                binary_search(mid + 1, end - 1)
 
         binary_search(0, len(nums) - 1)
-        return min_so_far
+        return ans
 
 
 s = Solution()
