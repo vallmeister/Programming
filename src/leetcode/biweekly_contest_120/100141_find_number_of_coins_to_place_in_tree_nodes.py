@@ -22,7 +22,10 @@ class Solution:
                 tree_coins.extend(sub_coins)
             subtree_sizes[node] = size
             tree_coins.sort(reverse=True)
-            top_coins[node] = tree_coins[:3] + tree_coins[-2:]
+            if len(tree_coins) <= 4:
+                top_coins[node] = tree_coins
+            else:
+                top_coins[node] = tree_coins[:3] + tree_coins[-2:]
             top_coins[node].sort(reverse=True)
             return size, tree_coins
 
@@ -32,6 +35,10 @@ class Solution:
                 ans[v] = 1
                 continue
             coins = top_coins[v]
+            if len(coins) == 3:
+                ans[v] = max(0, math.prod(coins[:3]))
+            elif len(coins) == 4:
+                ans[v] = max(0, math.prod(coins[:3]), coins[0] * math.prod(coins[-2:]))
             ans[v] = max(0, math.prod(coins[:3]), coins[0] * math.prod(coins[-2:]))
         return ans
 
