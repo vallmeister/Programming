@@ -1,5 +1,6 @@
 class Solution:
     def numberOfArithmeticSlices(self, nums: list[int]) -> int:
+        # TODO: Works, but wrong
         result = 0
         n = len(nums)
         for i in range(n - 2):
@@ -15,3 +16,4 @@ class Solution:
 s = Solution()
 print(s.numberOfArithmeticSlices([1, 2, 3, 4]))
 print(s.numberOfArithmeticSlices([1]))
+print(s.numberOfArithmeticSlices([1, -10, 4, -100, 7]))

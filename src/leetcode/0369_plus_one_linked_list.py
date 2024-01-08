@@ -6,23 +6,16 @@ class ListNode:
 
 
 class Solution:
-    # TODO: Retry with sentinel bit
     def plusOne(self, head: ListNode) -> ListNode:
-        stack = []
-        curr = head
-        while curr:
-            stack.append(curr)
-            curr = curr.next
-        lst = stack.pop()
-        carry = (lst.val + 1) // 10
-        while stack and carry:
-            lst.val = 0
-            lst = stack.pop()
-            carry = (lst.val + 1) // 10
-        else:
-            if not stack and carry:
-                lst.val = 0
-                head = ListNode(1, lst)
-            else:
-                lst.val += 1
-        return head
+        sentinel = ListNode(0, head)
+        not_nine = sentinel
+        while head:
+            if head.val != 9:
+                not_nine = head
+            head = head.next
+        not_nine.val += 1
+        not_nine = not_nine.next
+        while not_nine:
+            not_nine.val = 0
+            not_nine = not_nine.next
+        return sentinel if sentinel.val else sentinel.next
