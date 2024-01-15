@@ -1,9 +1,11 @@
 class Solution:
     def calculateTime(self, keyboard: str, word: str) -> int:
-        keyboard = {k: v for k, v in zip(keyboard, range(len(keyboard)))}
+        keys = [-1] * 26
+        for idx, key in enumerate(keyboard):
+            keys[ord(key) - ord('a')] = idx
         t = pos = 0
-        for c in word:
-            idx = keyboard[c]
+        for char in word:
+            idx = keys[ord(char) - ord('a')]
             t += abs(idx - pos)
             pos = idx
         return t
