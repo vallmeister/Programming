@@ -1,57 +1,35 @@
-def rob_recursive(nums: list[int]) -> int:
-    if len(nums) == 0:
-        return 0
-    elif len(nums) == 1:
-        return nums[0]
-    return max(nums[0] + rob_recursive(nums[2:]), nums[1] + rob_recursive(nums[3:]))
+from functools import cache
+from typing import List
 
 
-def rob_memoization(nums: list[int]) -> int:
-    return rob_memoization_helper(nums, {})
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+
+        @cache
+        def memoization(house):
+            if house >= n:
+                return 0
+            return max(memoization(house + 1), nums[house] + memoization(house + 2))
+
+        dp = [0] * (n + 1)
+        dp[0] = nums[0]
+        for i in range(1, n):
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
+
+        def dp_space_optimized():
+            if n == 1:
+                return nums[0]
+            dp_0, dp_1 = 0, nums[0]
+            current = 0
+            for house in range(1, n):
+                current = max(dp_0 + nums[house], dp_1)
+                dp_0, dp_1 = dp_1, current
+            return current
+
+        return dp[n - 1]
 
 
-def rob_memoization_helper(nums: list[int], memo: dict) -> int:
-    if len(nums) == 0:
-        return 0
-    elif len(nums) == 1:
-        return nums[0]
-    k = repr(nums)
-    if k in memo:
-        return memo[k]
-    else:
-        memo[k] = max(nums[0] + rob_memoization_helper(nums[2:], memo),
-                      nums[1] + rob_memoization_helper(nums[3:], memo))
-    return memo[k]
-
-
-def rob_dp(nums: list[int]) -> int:
-    n = len(nums)
-    dp = [-1] * (n+1)
-    dp[n] = 0  # No houses left to rob
-    dp[n-1] = nums[n-1]  # Only one house left, so we have to rob it
-    for i in range(n - 2, -1, -1):
-        dp[i] = max(dp[i+1], dp[i+2] + nums[i])
-    return dp[0]
-
-
-def rob_dp_opt(nums: list[int]) -> int:
-    n = len(nums)
-    if n == 1:
-        return nums[0]
-    prev = 0
-    curr = nums[n-1]
-    for i in range(n-2, -1, -1):
-        tmp = curr
-        curr = max(curr, prev + nums[i])
-        prev = tmp
-    return curr
-
-
-print(rob_recursive([1, 2, 3, 1]))
-print(rob_recursive([2, 7, 9, 3, 1]))
-print(rob_memoization([1, 2, 3, 1]))
-print(rob_memoization([2, 7, 9, 3, 1]))
-print(rob_dp([1, 2, 3, 1]))
-print(rob_dp([2, 7, 9, 3, 1]))
-print(rob_dp_opt([1, 2, 3, 1]))
-print(rob_dp_opt([2, 7, 9, 3, 1]))
+s = Solution()
+print(s.rob([1, 2, 3, 1]))
+print(s.rob([2, 7, 9, 3, 1]))
