@@ -11,27 +11,27 @@ class TreeNode:
 
 class Solution:
     def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
-        t1_values = set()
-        t2_values = set()
 
-        def traverse(node, mem):
-            if node is None:
+        def inorder(node, nums):
+            if not node:
                 return
-            mem.add(node.val)
-            traverse(node.left, mem)
-            traverse(node.right, mem)
+            inorder(node.left, nums)
+            nums.append(node.val)
+            inorder(node.right, nums)
 
-        if root1.val + root2.val < target:
-            root1.left = None
-            root2.left = None
-        elif root1.val + root2.val > target:
-            root1.right = None
-            root2.right = None
-        else:
-            return True
-        traverse(root1, t1_values)
-        traverse(root2, t2_values)
-        for val in t1_values:
-            if target - val in t2_values:
+        nums_1 = []
+        nums_2 = []
+        inorder(root1, nums_1)
+        inorder(root2, nums_2)
+
+        i = 0
+        j = len(nums_2) - 1
+        while i < len(nums_1) and j >= 0:
+            s = nums_1[i] + nums_2[j]
+            if s == target:
                 return True
+            elif s < target:
+                i += 1
+            elif s > target:
+                j -= 1
         return False
