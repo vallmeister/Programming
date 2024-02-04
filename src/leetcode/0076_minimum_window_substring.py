@@ -1,34 +1,20 @@
-from collections import Counter, defaultdict
+from collections import Counter
 
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         m = len(s)
-        t_dict = Counter(t)
+        t_letters = Counter(t)
+        ans = ''
         left = 0
-        right = 0
-        ans = ""
-        curr_window = defaultdict(int)
-        curr_size = 0
-
-        def check_window():
-            for letter, occurrences in t_dict.items():
-                if curr_window[letter] < occurrences:
-                    return False
-            return True
-
-        while right < m:
-            while right < m and not check_window():
-                character = s[right]
-                curr_window[character] += 1
-                curr_size += 1
-                right += 1
-            while left <= right and check_window():
-                if not ans or curr_size < len(ans):
-                    ans = s[left:right]
-                character = s[left]
-                curr_window[character] -= 1
-                curr_size -= 1
+        for right in range(m):
+            curr_char = s[right]
+            t_letters[curr_char] -= 1
+            while all(v <= 0 for v in t_letters.values()):
+                if not ans or len(ans) > right - left + 1:
+                    ans = s[left:right + 1]
+                curr_char = s[left]
+                t_letters[curr_char] += 1
                 left += 1
         return ans
 
