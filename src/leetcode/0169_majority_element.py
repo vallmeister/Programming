@@ -1,15 +1,19 @@
-from collections import Counter
 from typing import List
 
 
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        n = len(nums)
-        counter = Counter(nums)
-        for num, occurrence in counter.items():
-            if occurrence > n // 2:
-                return num
-        return 0
+        count = 1
+        prev = nums[0]
+        for num in nums[1:]:
+            if prev == num:
+                count += 1
+            else:
+                count -= 1
+            if count == 0:
+                prev = num
+                count = 1
+        return prev
 
 
 s = Solution()
