@@ -14,6 +14,7 @@ class Solution:
                 return prefix[i] + nums[i]
         return -1
 
+
 s = Solution()
 print(s.largestPerimeter([5, 5, 5]))
 print(s.largestPerimeter([1, 12, 1, 2, 5, 50, 3]))
