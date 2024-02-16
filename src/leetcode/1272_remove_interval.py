@@ -1,16 +1,17 @@
 class Solution:
     def removeInterval(self, intervals: list[list[int]], toBeRemoved: list[int]) -> list[list[int]]:
         new_intervals = []
+        left, right = toBeRemoved
         for start, end in intervals:
-            if toBeRemoved[0] <= start and end <= toBeRemoved[1]:
+            if left <= start and end <= right:
                 continue
-            elif start < toBeRemoved[0] and toBeRemoved[1] < end:
-                new_intervals.append([start, toBeRemoved[0]])
-                new_intervals.append([toBeRemoved[1], end])
-            elif toBeRemoved[0] <= start <= toBeRemoved[1] < end:
-                new_intervals.append([toBeRemoved[1], end])
-            elif start < toBeRemoved[0] <= end <= toBeRemoved[1]:
-                new_intervals.append([start, toBeRemoved[0]])
+            elif start < left <= end <= right:
+                new_intervals.append([start, left])
+            elif left <= start < right <= end:
+                new_intervals.append([right, end])
+            elif start < left and right < end:
+                new_intervals.append([start, left])
+                new_intervals.append([right, end])
             else:
                 new_intervals.append([start, end])
         return new_intervals
