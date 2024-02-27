@@ -1,16 +1,18 @@
-import heapq
+from heapq import heappush, heappop
+
 
 class Solution:
     def minMeetingRooms(self, intervals: list[list[int]]) -> int:
-        intervals.sort(key=lambda x: x[0])
+        intervals.sort()
+        available = [0]
         rooms = 1
-        heap = [intervals[0][1]]
-        for i in range(1, len(intervals)):
-            next_available = heapq.heappop(heap)
-            if intervals[i][0] < next_available:
-                heapq.heappush(heap, next_available)
+        for start, end in intervals:
+            if start < available[0]:
                 rooms += 1
-            heapq.heappush(heap, intervals[i][1])
+                heappush(available, end)
+            else:
+                heappop(available)
+                heappush(available, end)
 
         return rooms
 
