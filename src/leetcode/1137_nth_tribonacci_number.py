@@ -1,18 +1,15 @@
-def tribonacci(n: int) -> int:
-    if n == 0:
-        return 0
-    elif n == 1 or n == 2:
-        return 1
-    prev2 = 0
-    prev1 = 1
-    curr = 1
-    for _ in range(3, n + 1):
-        tmp = curr
-        curr += prev1 + prev2
-        prev2 = prev1
-        prev1 = tmp
-    return curr
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        if n == 0:
+            return 0
+        elif n in {1, 2}:
+            return 1
+        t0, t1, t2 = 0, 1, 1
+        for i in range(3, n + 1):
+            t2, t1, t0 = t2 + t1 + t0, t2, t1
+        return t2
 
 
-print(tribonacci(4))
-print(tribonacci(25))
+s = Solution()
+print(s.tribonacci(4))
+print(s.tribonacci(25))
