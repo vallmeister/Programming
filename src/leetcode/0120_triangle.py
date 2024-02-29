@@ -1,13 +1,12 @@
 class Solution:
     def minimumTotal(self, triangle: list[list[int]]) -> int:
-        n = len(triangle)
-        curr_row = triangle[n - 1]
-        for i in range(n - 2, -1, -1):
-            row = triangle[i]
-            for j in range(len(row)):
-                row[j] += min(curr_row[j], curr_row[j + 1])
-            curr_row = row
-        return triangle[0][0]
+        prev_row = triangle[0]
+        for curr_row in triangle[1:]:
+            n = len(curr_row)
+            for i in range(n):
+                curr_row[i] += min(prev_row[min(i, n - 2)], prev_row[max(i - 1, 0)])
+            prev_row = curr_row
+        return min(prev_row)
 
 
 s = Solution()
