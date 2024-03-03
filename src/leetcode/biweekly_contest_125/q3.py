@@ -32,11 +32,9 @@ class Solution:
         for i in range(n):
             for k1, v1 in paths[i].items():
                 for k2, v2 in paths[i].items():
-                    if k1 == k2:
+                    if k1 >= k2:
                         continue
                     ans[i] += len(v1) * len(v2)
-        for i in range(n):
-            ans[i] //= 2
         return ans
 
 
