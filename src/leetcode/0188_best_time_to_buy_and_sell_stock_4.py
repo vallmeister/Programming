@@ -8,17 +8,21 @@ class Solution:
         n = len(prices)
 
         @cache
-        def recursive(start, transactions):
-            if transactions == 0 or start >= n:
+        def memoization(day, t, hold):
+            if day >= n or t == 0:
                 return 0
-            profit = 0
-            min_so_far = prices[start]
-            for i in range(start + 1, n):
-                profit = max(profit, prices[i] - min_so_far + recursive(i, transactions - 1))
-                min_so_far = min(min_so_far, prices[i])
-            return profit
+            elif hold:
+                return max(memoization(day + 1, t, True), memoization(day + 1, t - 1, False) + prices[day])
+            else:
+                return max(memoization(day + 1, t, False), memoization(day + 1, t, True) - prices[day])
 
-        return recursive(0, k)
+        dp = [[[0] * 2 for _ in range(k + 1)] for _ in range(n + 1)]
+        for i in reversed(range(n)):
+            for t in range(1, k + 1):
+                dp[i][t][0] = max(dp[i + 1][t][0], dp[i + 1][t][1] - prices[i])
+                dp[i][t][1] = max(dp[i + 1][t][1], dp[i + 1][t - 1][0] + prices[i])
+
+        return dp[0][k][0]
 
 
 s = Solution()
