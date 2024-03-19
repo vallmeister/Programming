@@ -1,16 +1,22 @@
+import math
+
+
 class Solution:
     def minCostII(self, costs: list[list[int]]) -> int:
         n = len(costs)
-        k = len(costs[0])
+        prev_house = costs[0]
+        k = len(prev_house)
         for i in range(1, n):
-            for j in range(k):
-                prev_costs = []
-                for m in range(k):
-                    if j == m:
+            curr_house = costs[i]
+            for color in range(k):
+                prev_color = math.inf
+                for j in range(k):
+                    if color == j:
                         continue
-                    prev_costs.append(costs[i - 1][m])
-                costs[i][j] += min(prev_costs)
-        return min(costs[n - 1])
+                    prev_color = min(prev_color, prev_house[j])
+                curr_house[color] += prev_color
+            prev_house = curr_house
+        return min(costs[-1])
 
 
 s = Solution()

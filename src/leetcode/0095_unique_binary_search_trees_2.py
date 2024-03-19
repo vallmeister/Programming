@@ -11,7 +11,21 @@ class TreeNode:
 
 class Solution:
     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
-        pass
+
+        def recursive(start, end):
+            if start > end:
+                return [None]
+            ans = []
+            for i in range(start, end + 1):
+                for lf in recursive(start, i - 1):
+                    for rt in recursive(i + 1, end):
+                        root = TreeNode(i)
+                        root.left = lf
+                        root.right = rt
+                        ans.append(root)
+            return ans
+
+        return recursive(1, n)
 
 
 s = Solution()

@@ -1,17 +1,14 @@
 class Solution:
     def minCost(self, costs: list[list[int]]) -> int:
         n = len(costs)
-        dp = [[0] * 3 for _ in range(n)]
-        dp[0] = costs[0]
-        for house in range(1, n):
-            for color in range(3):
-                prev_cost = []
-                for not_color in range(3):
-                    if color == not_color:
-                        continue
-                    prev_cost.append(dp[house - 1][not_color])
-                dp[house][color] = min(prev_cost) + costs[house][color]
-        return min(dp[-1])
+        prev_house = costs[0]
+        for i in range(1, n):
+            curr_house = costs[i]
+            curr_house[0] += min(prev_house[1], prev_house[2])
+            curr_house[1] += min(prev_house[0], prev_house[2])
+            curr_house[2] += min(prev_house[0], prev_house[1])
+            prev_house = curr_house
+        return min(costs[-1])
 
 
 s = Solution()
