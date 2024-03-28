@@ -4,19 +4,15 @@ from typing import List
 
 class Solution:
     def maxSubarrayLength(self, nums: List[int], k: int) -> int:
-        window = defaultdict(int)
+        frequencies = defaultdict(int)
         left = 0
-        right = 0
-        n = len(nums)
         ans = 0
-        while right < n:
-            num = nums[right]
-            right += 1
-            window[num] += 1
-            while window[num] > k:
-                window[nums[left]] -= 1
+        for right, num in enumerate(nums):
+            frequencies[num] += 1
+            while frequencies[num] > k:
+                frequencies[nums[left]] -= 1
                 left += 1
-            ans = max(ans, right - left)
+            ans = max(ans, right - left + 1)
         return ans
 
 
