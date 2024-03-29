@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from collections import defaultdict
 from typing import Optional, List
 
 
@@ -11,21 +12,34 @@ class TreeNode:
 
 class Solution:
     def findLeaves(self, root: Optional[TreeNode]) -> List[List[int]]:
-        heights = [[]]
+        children = defaultdict(set)
+        parent = {}
+        leaves = []
 
-        def dfs_height(node):
+        def dfs(node):
             if not node:
-                return 0
+                return
             elif not node.left and not node.right:
-                heights[0].append(node.val)
-                return 0
-            left_depth = dfs_height(node.left)
-            right_depth = dfs_height(node.right)
-            d = 1 + max(left_depth, right_depth)
-            while len(heights) <= d:
-                heights.append([])
-            heights[d].append(node.val)
-            return d
+                leaves.append(node)
+            if node.left:
+                parent[node.left] = node
+                children[node].add(node.left)
+                dfs(node.left)
+            if node.right:
+                parent[node.right] = node
+                children[node].add(node.right)
+                dfs(node.right)
 
-        dfs_height(root)
-        return heights
+        dfs(root)
+        ans = []
+        while leaves:
+            ans.append([vertex.val for vertex in leaves])
+            next_leaves = []
+            for leaf in leaves:
+                if leaf not in parent:
+                    continue
+                children[parent[leaf]].remove(leaf)
+                if not children[parent[leaf]]:
+                    next_leaves.append(parent[leaf])
+            leaves = next_leaves
+        return ans
