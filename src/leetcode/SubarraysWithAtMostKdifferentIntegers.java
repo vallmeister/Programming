@@ -20,7 +20,7 @@ public class SubarraysWithAtMostKdifferentIntegers {
             int left = 0;
             int count = 0;
             for (int right = 0; right < nums.length; right++) {
-                int right_num = nums[right];
+                final int right_num = nums[right];
                 int freq = frequencies.getOrDefault(right_num, 0);
                 frequencies.put(right_num, ++freq);
                 while (frequencies.size() > k) {
