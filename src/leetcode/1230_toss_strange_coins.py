@@ -1,16 +1,14 @@
 class Solution:
     def probabilityOfHeads(self, prob: list[float], target: int) -> float:
         n = len(prob)
-        dp = [1.0, 0]
-        for c in range(1, n + 1):
-            new_dp = [0] * (c + 2)
-            for k in range(c, -1, -1):
-                if k == 0:
-                    new_dp[k] = dp[k] * (1 - prob[c - 1])
-                else:
-                    new_dp[k] = dp[k] * (1 - prob[c - 1]) + dp[k - 1] * prob[c - 1]
-            dp = new_dp
-        return dp[target]
+        dp = [[0] * (n + 1) for _ in range(n)]
+        dp[0][0] = 1 - prob[0]
+        dp[0][1] = prob[0]
+        for coin in range(1, n):
+            for heads in range(coin + 2):
+                dp[coin][heads] = dp[coin - 1][heads - 1] * prob[coin] + dp[coin - 1][heads] * (1 - prob[coin])
+
+        return dp[n - 1][target]
 
 
 s = Solution()
