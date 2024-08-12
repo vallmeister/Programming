@@ -14,10 +14,14 @@ class KthLargest:
 
     def add(self, val: int) -> int:
         heappush(self.heap, val)
-        if len(self.heap) > self.k:
+        while len(self.heap) > self.k:
             heappop(self.heap)
         return self.heap[0]
 
-# Your KthLargest object will be instantiated and called as such:
-# obj = KthLargest(k, nums)
-# param_1 = obj.add(val)
+
+kth_largest = KthLargest(3, [4, 5, 8, 2])
+print(kth_largest.add(3))
+print(kth_largest.add(5))
+print(kth_largest.add(10))
+print(kth_largest.add(9))
+print(kth_largest.add(4))
