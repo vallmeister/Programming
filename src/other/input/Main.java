@@ -3,13 +3,14 @@ package other.input;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         GenerateText.generateTextFile();
 
         try(BufferedReader reader = new BufferedReader(new FileReader("resources/output.txt"))) {
-            for (String line: reader.lines().toList()) {
+            for (String line: reader.lines().collect(Collectors.toList())) {
                 System.out.println(line);
             }
         } catch (IOException exception) {

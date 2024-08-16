@@ -48,7 +48,7 @@ public class Main {
                 Stream.of(-4, 1, -2, 3)
                         .map(Math::abs).sorted().collect(Collectors.toList())
         );
-        List<Integer> range = IntStream.range(1, 10).boxed().toList();
+        List<Integer> range = IntStream.range(1, 10).boxed().collect(Collectors.toList());
         Predicate<Integer> isEven = i -> i % 2 == 0;
         range.stream().filter(isEven).forEach(System.out::println);
         int[] numbers = new int[]{8, 1, 9, 3, 6, 7, 11, 2, 0};
