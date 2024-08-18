@@ -1,24 +1,21 @@
-import heapq
+from heapq import heappush, heappop
+
 
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
-        num_queue = [1]
-        res = []
-        num_set = set(num_queue)
-        heapq.heapify(num_queue)
-        while len(res) < n:
-            num = heapq.heappop(num_queue)
-            if not num * 2 in num_set:
-                num_set.add(num * 2)
-                heapq.heappush(num_queue, num * 2)
-            if not num * 3 in num_set:
-                num_set.add(num * 3)
-                heapq.heappush(num_queue, num * 3)
-            if not num * 5 in num_set:
-                num_set.add(num * 5)
-                heapq.heappush(num_queue, num * 5)
-            res.append(num)
-        return res[n - 1]
+        heap = []
+        heappush(heap, 1)
+        seen = set()
+        curr_ugly = 1
+
+        for _ in range(n):
+            curr_ugly = heappop(heap)
+            for prime in [2, 3, 5]:
+                next_ugly = curr_ugly * prime
+                if next_ugly not in seen:
+                    seen.add(next_ugly)
+                    heappush(heap, next_ugly)
+        return curr_ugly
 
 
 s = Solution()
