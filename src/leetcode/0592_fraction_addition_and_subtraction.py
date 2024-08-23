@@ -8,9 +8,7 @@ class Solution:
         fractions = re.split('[+-]', expression)
 
         def get_operations():
-            for c in expression:
-                if c in ['+', '-']:
-                    yield c
+            yield from (c for c in expression if c in ['+', '-'])
             yield '+'
 
         operations = get_operations()
