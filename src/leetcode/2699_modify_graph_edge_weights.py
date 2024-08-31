@@ -16,7 +16,7 @@ class Solution:
         if sp[destination] < target:
             return ans
         elif sp[destination] == target:
-            return list(map(lambda x: [x[0], x[1], x[2]] if x[2] > 0 else [x[0], x[1], int(2 * 10e9)], edges))
+            return list(map(lambda x: [x[0], x[1], x[2]] if x[2] > 0 else [x[0], x[1], MAX_WEIGHT], edges))
 
         adj = self.get_adjacency(n, edges, True)
         sp = self.dijkstra(n, adj, source)
