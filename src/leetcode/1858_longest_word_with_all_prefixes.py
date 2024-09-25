@@ -20,7 +20,7 @@ class Solution:
             nonlocal ans
             candidate = node['*']
             if len(candidate) > len(ans):
-                ans = node['*']
+                ans = candidate
             elif len(candidate) == len(ans):
                 ans = min(ans, candidate)
             for child in node.keys():
