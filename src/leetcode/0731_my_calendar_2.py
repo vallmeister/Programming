@@ -14,9 +14,6 @@ class MyCalendarTwo:
                 self.overlapping_bookings.append((max(start, s), min(end, e)))
         self.bookings.append((start, end))
         return True
-    
-        
-
 
 # Your MyCalendarTwo object will be instantiated and called as such:
 # obj = MyCalendarTwo()
