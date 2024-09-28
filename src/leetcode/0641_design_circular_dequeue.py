@@ -31,18 +31,20 @@ class MyCircularDeque:
         if self.isEmpty():
             return False
         self.size -= 1
-        self.head += 1
-        self.head %= self.k
+        if not self.isEmpty():
+            self.head += 1
+            self.head %= self.k
         return True
 
     def deleteLast(self) -> bool:
         if self.isEmpty():
             return False
         self.size -= 1
-        self.tail -= 1
-        self.tail += self.k
-        self.tail %= self.k
-        return True        
+        if not self.isEmpty():
+            self.tail -= 1
+            self.tail += self.k
+            self.tail %= self.k
+        return True
 
     def getFront(self) -> int:
         if self.isEmpty():
@@ -56,10 +58,9 @@ class MyCircularDeque:
 
     def isEmpty(self) -> bool:
         return self.size == 0
-        
+
     def isFull(self) -> bool:
         return self.size == self.k
-
 
 # Your MyCircularDeque object will be instantiated and called as such:
 # obj = MyCircularDeque(k)
