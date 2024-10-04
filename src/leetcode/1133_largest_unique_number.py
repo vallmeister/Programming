@@ -1,17 +1,12 @@
-from collections import defaultdict
-
-
 class Solution:
     def largestUniqueNumber(self, nums: list[int]) -> int:
-        table = defaultdict(list)
+        count = [0] * 1001
         for num in nums:
-            table[num].append(num)
-        max_so_far = -1
-        for num_list in table.values():
-            if len(num_list) > 1:
-                continue
-            max_so_far = max(max_so_far, num_list[0])
-        return max_so_far
+            count[num] += 1
+        for i in reversed(range(1001)):
+            if count[i] == 1:
+                return i
+        return -1
 
 
 s = Solution()
