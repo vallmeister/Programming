@@ -2,20 +2,14 @@ class Solution:
     def judgeSquareSum(self, c: int) -> bool:
         if c < 3:
             return True
+        squares = set()
         a = 0
         while a * a <= c:
-            b = c - a * a
-            left = 0
-            right = b
-            while left <= right:
-                mid = (left + right) // 2
-                if mid * mid == b:
-                    return True
-                elif mid * mid < b:
-                    left = mid + 1
-                elif mid * mid > b:
-                    right = mid - 1
+            squares.add(a * a)
             a += 1
+        for square in squares:
+            if c - square in squares:
+                return True
         return False
 
 
