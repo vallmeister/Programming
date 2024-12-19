@@ -3,18 +3,12 @@ from typing import List
 
 class Solution:
     def finalPrices(self, prices: List[int]) -> List[int]:
-        n = len(prices)
-        ans = [0] * n
-        mono_stack = []
-        for j in range(n):
-            while mono_stack and prices[j] <= prices[mono_stack[-1]]:
-                i = mono_stack.pop()
-                ans[i] = prices[i] - prices[j]
-            mono_stack.append(j)
-        while mono_stack:
-            i = mono_stack.pop()
-            ans[i] = prices[i]
-        return ans
+        ms = []
+        for j in range(len(prices)):
+            while ms and prices[ms[-1]] >= prices[j]:
+                prices[ms.pop()] -= prices[j]
+            ms.append(j)
+        return prices
 
 
 s = Solution()
