@@ -13,24 +13,23 @@ class TreeNode:
 class Solution:
     def largestValues(self, root: Optional[TreeNode]) -> List[int]:
         ans = []
-        q = []
-        if root:
-            q.append(root)
+        q = [root]
         while q:
-            next_q = []
-            curr_max = -math.inf
+            mx = -math.inf
+            nq = []
             for node in q:
-                curr_max = max(curr_max, node.val)
-                left, right = node.left, node.right
-                if left:
-                    next_q.append(left)
-                if right:
-                    next_q.append(right)
-            ans.append(curr_max)
-            q = next_q
+                if not node:
+                    continue
+                mx = max(mx, node.val)
+                nq.extend([node.left, node.right])
+            q = nq
+            if mx > -math.inf:
+                ans.append(mx)
         return ans
 
 
 s = Solution()
-# print(s.largestValues([1, 3, 2, 5, 3, None, 9]))
-# print(s.largestValues([1, 2, 3]))
+two = TreeNode(2)
+three = TreeNode(3)
+one = TreeNode(1, two, three)
+print(s.largestValues(one))
