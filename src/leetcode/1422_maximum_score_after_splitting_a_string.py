@@ -1,18 +1,15 @@
 class Solution:
     def maxScore(self, s: str) -> int:
         n = len(s)
-        ones = 0
-        for digit in s:
-            if digit == '1':
-                ones += 1
-        zeros = 0
         score = 0
-        for digit in s[:n - 1]:
-            if digit == '1':
-                ones -= 1
-            elif digit == '0':
-                zeros += 1
-            score = max(score, zeros + ones)
+        zeroes = [0] * n
+        ones = [0] * n
+        for i in range(n):
+            zeroes[i] = zeroes[i - 1] + 1 - int(s[i])
+        for i in reversed(range(n - 1)):
+            ones[i] = ones[i + 1] + int(s[i + 1])
+        for i in range(n - 1):
+            score = max(score, zeroes[i] + ones[i])
         return score
 
 
