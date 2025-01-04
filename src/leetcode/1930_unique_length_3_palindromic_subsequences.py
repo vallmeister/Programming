@@ -1,24 +1,32 @@
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
         ans = 0
-        fst = [-1] * 26
-        lst = [-1] * 26
+        indices = [[] for _ in range(26)]
         for i, char in enumerate(s):
-            alphabet = ord(char) - ord('a')
-            if fst[alphabet] == -1:
-                fst[alphabet] = i
-            else:
-                lst[alphabet] = i
+            indices[ord(char) - ord('a')].append(i)
         for i in range(26):
-            palindromes = set()
-            if fst[i] > -1 and lst[i] > -1:
-                left = fst[i]
-                right = lst[i]
-                char = chr(i + ord('a'))
-                for j in s[left + 1: right]:
-                    palindromes.add(char + j + char)
-            ans += len(palindromes)
+            curr_indices = indices[i]
+            if len(curr_indices) < 2:
+                continue
+            left = curr_indices[0]
+            right = curr_indices[-1]
+            for j in range(26):
+                ans += self.binary_search(indices[j], left, right)
         return ans
+
+    def binary_search(self, indices, lower, upper):
+        left = 0
+        right = len(indices) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            index = indices[mid]
+            if index <= lower:
+                left = mid + 1
+            elif index >= upper:
+                right = mid - 1
+            else:
+                return 1
+        return 0
 
 
 sol = Solution()
