@@ -1,11 +1,12 @@
 class MRUQueue:
 
     def __init__(self, n: int):
-        pass
+        self.q = list(range(n + 1))
 
     def fetch(self, k: int) -> int:
-        pass
+        num = self.q.pop(k)
+        self.q.append(num)
+        return num
 
-# Your MRUQueue object will be instantiated and called as such:
 # obj = MRUQueue(n)
 # param_1 = obj.fetch(k)
