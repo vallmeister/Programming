@@ -1,15 +1,14 @@
 class Solution:
     def numKLenSubstrNoRepeats(self, s: str, k: int) -> int:
-        chars = set()
-        left = 0
-        ans = 0
+        freq = [0] * 26
+        left = ans = 0
         for right, letter in enumerate(s):
-            while letter in chars or right - left + 1 > k:
-                chars.remove(s[left])
-                left += 1
-            chars.add(letter)
-            if right - left + 1 == k:
+            freq[ord(letter) - ord('a')] += 1
+            if right - left + 1 == k and all(freq[i] <= 1 for i in range(26)):
                 ans += 1
+            if right - left + 1 == k:
+                freq[ord(s[left]) - ord('a')] -= 1
+                left += 1
         return ans
 
 
