@@ -4,19 +4,18 @@ from typing import List
 
 class Solution:
     def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
-        flowers.sort()
-        full_bloom_at = {}
         heap = []
-        i = 0
-        for person in sorted(people):
-            while i < len(flowers) and flowers[i][0] <= person:
-                heappush(heap, flowers[i][1])
-                i += 1
-            while heap and heap[0] < person:
-                heappop(heap)
-            full_bloom_at[person] = len(heap)
-        return [full_bloom_at[t] for t in people]
-
+        for start, end in flowers:
+            heappush(heap, (start, 1))
+            heappush(heap, (end + 1, -1))
+        seen_at = {}
+        curr_flowers = 0
+        for time in sorted(people):
+            while heap and time >= heap[0][0]:
+                _, flower = heappop(heap)
+                curr_flowers += flower
+            seen_at[time] = curr_flowers
+        return [seen_at[t] for t in people]
 
 
 s = Solution()
