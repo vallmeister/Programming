@@ -1,15 +1,11 @@
 class Solution:
     def largestGoodInteger(self, num: str) -> str:
         n = len(num)
-        ans = -1
+        ans = ''
         for i in range(n - 2):
-            if num[i] == num[i+1] == num[i+2]:
-                ans = max(ans, int(num[i] * 3))
-        if ans == -1:
-            return ""
-        elif ans == 0:
-            return "000"
-        return str(ans)
+            if num[i] == num[i + 1] == num[i + 2]:
+                ans = max(ans, num[i])
+        return 3 * ans
 
 
 s = Solution()

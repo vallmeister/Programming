@@ -11,21 +11,14 @@ class TreeNode:
 
 class Solution:
     def averageOfSubtree(self, root: Optional[TreeNode]) -> int:
-        ans = 0
-
-        def dfs(node):
-            l_size = r_size = 0
-            l_sum = r_sum = 0
-            nonlocal ans
-            if node.left:
-                l_size, l_sum = dfs(node.left)
-            if node.right:
-                r_size, r_sum = dfs(node.right)
-            total_size = l_size + r_size + 1
-            total_sum = l_sum + r_sum + node.val
-            if total_sum // total_size == node.val:
-                ans += 1
-            return total_size, total_sum
-
-        dfs(root)
+        _, _, ans = self.helper(root)
         return ans
+
+    def helper(self, node):
+        if not node:
+            return 0, 0, 0
+        s1, w1, a1 = self.helper(node.left)
+        s2, w2, a2 = self.helper(node.right)
+        total_sum = s1 + s2 + node.val
+        total_num = w1 + w2 + 1
+        return total_sum, total_num, a1 + a2 + (1 if total_sum // total_num == node.val else 0)
