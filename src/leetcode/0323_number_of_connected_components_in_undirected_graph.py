@@ -1,3 +1,4 @@
+from collections import deque
 from typing import List
 
 
@@ -24,6 +25,27 @@ class Solution:
             find(i)
 
         return len(set(parents))
+
+    def count_components_bfs(self, n, edges):
+        g = [[] for _ in range(n)]
+        for u, v in edges:
+            g[u].append(v)
+            g[v].append(u)
+        visited = [False] * n
+        ans = 0
+        for i in range(n):
+            if visited[i]:
+                continue
+            ans += 1
+            q = deque([i])
+            while q:
+                node = q.popleft()
+                if visited[node]:
+                    continue
+                visited[node] = True
+                for neighbor in g[node]:
+                    q.append(neighbor)
+        return ans
 
 
 s = Solution()
