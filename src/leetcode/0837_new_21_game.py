@@ -1,31 +1,20 @@
-from functools import cache
-
-
 class Solution:
     def new21Game(self, n: int, k: int, maxPts: int) -> float:
-        if k == 0:
-            return 1.0
-        probability = 1.0 / maxPts
-
-        @cache
-        def recursive(curr_points, card):
-            curr_points += card
-            if k <= curr_points <= n:
-                return 1
-            elif curr_points > n:
-                return 0
-            else:
-                result = 0
-                for i in range(1, maxPts + 1):
-                    result += recursive(curr_points, i)
-                return probability * result
-
-        return recursive(0, 0)
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        s = 1 if k > 0 else 0
+        for i in range(1, n + 1):
+            dp[i] = s / maxPts
+            if i < k:
+                s += dp[i]
+            if 0 <= i - maxPts < k:
+                s -= dp[i - maxPts]
+        return round(sum(dp[k:]), 5)
 
 
-s = Solution()
-print(s.new21Game(10, 1, 10))
-print(s.new21Game(6, 1, 10))
-print(s.new21Game(21, 17, 10))
-print(s.new21Game(421, 400, 47))
-print(s.new21Game(9811, 8776, 1096))
+ssol = Solution()
+print(ssol.new21Game(10, 1, 10))
+print(ssol.new21Game(6, 1, 10))
+print(ssol.new21Game(21, 17, 10))
+print(ssol.new21Game(421, 400, 47))
+print(ssol.new21Game(9811, 8776, 1096))
