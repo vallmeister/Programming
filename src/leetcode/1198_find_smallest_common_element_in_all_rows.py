@@ -1,11 +1,21 @@
 class Solution:
     def smallestCommonElement(self, mat: list[list[int]]) -> int:
-        intersect = set(mat[0])
-        for row in mat[1:]:
-            intersect = intersect.intersection(set(row))
-            if len(intersect) == 0:
-                return -1
-        return min(intersect)
+        m = len(mat)
+        n = len(mat[0])
+        curr_min = mat[0][0]
+        pointers = [0] * m
+        while True:
+            for i in range(m):
+                j = pointers[i]
+                while j < n and mat[i][j] < curr_min:
+                    j += 1
+                if j == n:
+                    return -1
+                elif curr_min < mat[i][j]:
+                    curr_min = mat[i][j]
+                    break
+            else:
+                return curr_min
 
 
 s = Solution()
