@@ -21,3 +21,4 @@ class Solution:
 s = Solution()
 print(s.smallestCommonElement([[1, 2, 3, 4, 5], [2, 4, 5, 8, 10], [3, 5, 7, 9, 11], [1, 3, 5, 7, 9]]))
 print(s.smallestCommonElement([[1, 2, 3], [2, 3, 4], [2, 3, 5]]))
+print(s.smallestCommonElement([[1, 2, 3, 4, 5], [2, 4, 5, 8, 10], [3, 4, 7, 9, 11], [1, 3, 5, 7, 9]]))
