@@ -1,32 +1,28 @@
+import bisect
+
+
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
         ans = 0
         indices = [[] for _ in range(26)]
-        for i, char in enumerate(s):
-            indices[ord(char) - ord('a')].append(i)
-        for i in range(26):
-            curr_indices = indices[i]
-            if len(curr_indices) < 2:
-                continue
-            left = curr_indices[0]
-            right = curr_indices[-1]
-            for j in range(26):
-                ans += self.binary_search(indices[j], left, right)
-        return ans
+        offset = ord('a')
+        for i, c in enumerate(s):
+            indices[ord(c) - offset].append(i)
 
-    def binary_search(self, indices, lower, upper):
-        left = 0
-        right = len(indices) - 1
-        while left <= right:
-            mid = (left + right) // 2
-            index = indices[mid]
-            if index <= lower:
-                left = mid + 1
-            elif index >= upper:
-                right = mid - 1
-            else:
-                return 1
-        return 0
+        for i in range(26):
+            outer_chars = indices[i]
+            if len(outer_chars) < 2:
+                continue
+            left = outer_chars[0]
+            right = outer_chars[-1]
+            for j in range(26):
+                inner_char = indices[j]
+                if not inner_char:
+                    continue
+                k = bisect.bisect_right(inner_char, left)
+                if k < len(inner_char) and left < inner_char[k] < right:
+                    ans += 1
+        return ans
 
 
 sol = Solution()
