@@ -12,26 +12,19 @@ class TreeNode:
 class Solution:
     def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
 
-        def inorder(node, nums):
+        def search(node, num):
             if not node:
-                return
-            inorder(node.left, nums)
-            nums.append(node.val)
-            inorder(node.right, nums)
-
-        nums_1 = []
-        nums_2 = []
-        inorder(root1, nums_1)
-        inorder(root2, nums_2)
-
-        i = 0
-        j = len(nums_2) - 1
-        while i < len(nums_1) and j >= 0:
-            s = nums_1[i] + nums_2[j]
-            if s == target:
+                return False
+            elif node.val == num:
                 return True
-            elif s < target:
-                i += 1
-            elif s > target:
-                j -= 1
-        return False
+            elif num < node.val:
+                return search(node.left, num)
+            else:
+                return search(node.right, num)
+
+        def dfs(node):
+            if not node:
+                return False
+            return search(root2, target - node.val) or dfs(node.left) or dfs(node.right)
+
+        return dfs(root1)
