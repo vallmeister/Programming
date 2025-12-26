@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from collections import deque
 from typing import Optional
 
 
@@ -11,26 +12,18 @@ class TreeNode:
 
 class Solution:
     def longestConsecutive(self, root: Optional[TreeNode]) -> int:
-        if root is None:
-            return 0
-        max_path = 0
-
-        def dfs(rt, curr_path):
-            nonlocal max_path
-            if rt is None:
-                max_path = max(max_path, curr_path)
-                return
-            if rt.left:
-                if rt.left.val == rt.val + 1:
-                    dfs(rt.left, curr_path + 1)
+        ans = 0
+        q = deque([(root, 1)])
+        while q:
+            node, seq = q.popleft()
+            if not node:
+                continue
+            ans = max(ans, seq)
+            for child in {node.left, node.right}:
+                if not child:
+                    continue
+                elif child.val == node.val + 1:
+                    q.append((child, seq + 1))
                 else:
-                    dfs(rt.left, 1)
-            if rt.right:
-                if rt.right.val == rt.val + 1:
-                    dfs(rt.right, curr_path + 1)
-                else:
-                    dfs(rt.right, 1)
-            max_path = max(max_path, curr_path)
-
-        dfs(root, 1)
-        return max_path
+                    q.append((child, 1))
+        return ans
