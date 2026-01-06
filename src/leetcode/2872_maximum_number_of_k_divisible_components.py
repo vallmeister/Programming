@@ -7,19 +7,21 @@ class Solution:
         visited = [False] * n
 
         def dfs(node):
-            if visited[node]:
-                return 0, 0
             visited[node] = True
-            c, v = 0, values[node] % k
+            curr_sum = values[node]
+            curr_comps = 0
             for child in g[node]:
-                cc, cv = dfs(child)
-                c += cc
-                v += cv
-                v %= k
-            c += 1 if v % k == 0 else 0
-            return c, v
+                if visited[child]:
+                    continue
+                child_sum, child_comps = dfs(child)
+                curr_sum += child_sum
+                curr_comps += child_comps
+            if curr_sum % k == 0:
+                curr_comps += 1
+            return curr_sum, curr_comps
 
-        return dfs(0)[0]
+        _, ans = dfs(0)
+        return ans
 
     def get_graph(self, n, edges):
         g = [[] for _ in range(n)]

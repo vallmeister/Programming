@@ -5,21 +5,13 @@ from typing import List
 class Solution:
     def minOperations(self, nums: List[int]) -> int:
         counter = Counter(nums)
-        if 1 in counter.values():
-            return -1
         ans = 0
         for count in counter.values():
-            if count == 2:
+            if count == 1:
+                return -1
+            ans += count // 3
+            if count % 3:
                 ans += 1
-            elif count % 3 == 0:
-                ans += count // 3
-            elif count % 3 == 1:
-                ans += 2
-                count -= 2 * 2
-                ans += count // 3
-            elif count % 3 == 2:
-                ans += 1
-                ans += count // 3
         return ans
 
 
