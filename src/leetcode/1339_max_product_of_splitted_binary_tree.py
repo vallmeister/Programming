@@ -11,24 +11,20 @@ class TreeNode:
 
 class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
-        subtree_sum = defaultdict(int)
-
-        def dfs_sum(node):
-            if not node:
-                return 0
-            ans = node.val + dfs_sum(node.left) + dfs_sum(node.right)
-            subtree_sum[node] = ans
-            return ans
-
         MOD = 10 ** 9 + 7
-        total = dfs_sum(root)
+        subtree_sums = defaultdict(int)
 
-        def dfs_split(node):
+        def dfs(node):
             if not node:
                 return 0
-            curr = subtree_sum[node]
-            subtree_prod = curr * (total - curr)
-            subtree_prod %= MOD
-            return max(subtree_prod, dfs_split(node.left), dfs_split(node.right))
+            ss = node.val  # subtree sum
+            ss += dfs(node.left)
+            ss += dfs(node.right)
+            subtree_sums[node] = ss
+            return ss
 
-        return dfs_split(root)
+        total = dfs(root)
+        ans = 0
+        for subtree in subtree_sums.values():
+            ans = max(ans, (total - subtree) * subtree)
+        return ans % MOD
