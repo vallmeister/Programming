@@ -41,7 +41,7 @@ class SegmentTreeNode:
             self.lazy = 0
 
     def update_range(self, query_start, query_end, val):
-        self.push()
+        # self.push()
         if self.start > query_end or self.end < query_start:
             return
         elif query_start <= self.start and self.end <= query_end:
