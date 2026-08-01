@@ -1,25 +1,13 @@
 class Solution:
     def findMin(self, nums: list[int]) -> int:
-        ans = 5000
+        return self.divide_and_conquer(nums, 0, len(nums) - 1)
 
-        def binary_search(start, end):
-            if start > end:
-                return
-            mid = (start + end) // 2
-            nonlocal ans
-            if nums[start] <= nums[mid] <= nums[end]:
-                ans = min(ans, nums[start])
-                binary_search(0, start - 1)
-            elif nums[start] <= nums[mid] >= nums[end]:
-                ans = min(ans, nums[end], nums[start])
-                binary_search(mid + 1, end)
-            elif nums[start] >= nums[mid] <= nums[end]:
-                ans = min(ans, nums[mid])
-                binary_search(start + 1, mid - 1)
-                binary_search(mid + 1, end - 1)
-
-        binary_search(0, len(nums) - 1)
-        return ans
+    def divide_and_conquer(self, nums, left, right):
+        n = right - left + 1
+        if n == 1 or nums[left] < nums[right]:
+            return nums[left]
+        mid = left + (right - left) // 2
+        return min(self.divide_and_conquer(nums, left, mid), self.divide_and_conquer(nums, mid + 1, right))
 
 
 s = Solution()
